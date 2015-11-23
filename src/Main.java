@@ -7,6 +7,7 @@ public class Main {
     public static String url = "jdbc:postgresql://sebastiankoall.de/infointe";
     public static String user = "infointe";
     public static String password = "InfoInte1516%";
+    public static String file = "/Users/jaspar.mang/Downloads/players.csv";
 
     public static void main(String[] args) {
         //insertClub();
@@ -24,7 +25,7 @@ public class Main {
 
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new FileReader("/Users/jaspar.mang/Downloads/players.csv"));
+            in = new BufferedReader(new FileReader(file));
             String zeile = null;
             zeile = in.readLine();
 
@@ -119,7 +120,7 @@ public class Main {
 
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new FileReader("/Users/jaspar.mang/Downloads/players.csv"));
+            in = new BufferedReader(new FileReader(file));
             String zeile = null;
             zeile = in.readLine();
 
@@ -215,7 +216,7 @@ public class Main {
 
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new FileReader("/Users/jaspar.mang/Downloads/players.csv"));
+            in = new BufferedReader(new FileReader(file));
             String zeile = null;
             zeile = in.readLine();
 
