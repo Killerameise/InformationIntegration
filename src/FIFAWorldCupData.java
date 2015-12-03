@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-
+import org.apache.commons.lang.StringEscapeUtils;
 /**
  * Created by jaspar.mang on 25.11.15.
  * This code is reay
@@ -36,7 +36,6 @@ public class FIFAWorldCupData {
 
                 //System.out.println("Gelesene Zeile: " + values[0] + values[1]);
 
-
                 boolean exsist = false;
                 boolean exsistLiga = false;
 
@@ -44,12 +43,12 @@ public class FIFAWorldCupData {
                     con = DriverManager.getConnection(url, user, password);
                     st = con.createStatement();
 
-                    rs = st.executeQuery("SELECT \"name\" FROM \"club\" WHERE \"name\"='" + values[11] + "'");
+                    rs = st.executeQuery("SELECT \"name\" FROM \"club\" WHERE \"name\"='" + StringEscapeUtils.escapeSql(values[11]) + "'");
                     if (rs.next()) {
                         exsist = true;
                     }
 
-                    rs = st.executeQuery("SELECT \"verband\" FROM \"liga\" WHERE \"verband\"='" + values[12] + "'");
+                    rs = st.executeQuery("SELECT \"verband\" FROM \"liga\" WHERE \"verband\"='" + StringEscapeUtils.escapeSql(values[12]) + "'");
                     if (rs.next()) {
                         exsistLiga = true;
                     }
@@ -82,14 +81,14 @@ public class FIFAWorldCupData {
                         con = DriverManager.getConnection(url, user, password);
                         st = con.createStatement();
                         if (!exsistLiga) {
-                            String stm2 = "INSERT INTO \"liga\"(\"verband\") VALUES('" + values[12] + "')";
+                            String stm2 = "INSERT INTO \"liga\"(\"verband\") VALUES('" + StringEscapeUtils.escapeSql(values[12]) + "')";
                             st.executeUpdate(stm2, Statement.RETURN_GENERATED_KEYS);
                             ResultSet result = st.getGeneratedKeys();
                             if (result.next()) {
                                 key = result.getInt(1);
                             }
                         } else {
-                            String stm2 = "SELECT \"id\" FROM \"liga\" WHERE \"verband\"='" + values[12] + "'";
+                            String stm2 = "SELECT \"id\" FROM \"liga\" WHERE \"verband\"='" + StringEscapeUtils.escapeSql(values[12]) + "'";
                             ResultSet result = st.executeQuery(stm2);
                             if (result.next()) {
                                 key = result.getInt("id");
@@ -159,7 +158,7 @@ public class FIFAWorldCupData {
                     con = DriverManager.getConnection(url, user, password);
                     st = con.createStatement();
 
-                    rs = st.executeQuery("SELECT \"name\" FROM \"team\" WHERE \"name\"='" + values[1] + "'");
+                    rs = st.executeQuery("SELECT \"name\" FROM \"team\" WHERE \"name\"='" + StringEscapeUtils.escapeSql(values[1]) + "'");
                     if (rs.next()) {
                         exsist = true;
                     }
@@ -256,7 +255,7 @@ public class FIFAWorldCupData {
                     con = DriverManager.getConnection(url, user, password);
                     st = con.createStatement();
 
-                    rs = st.executeQuery("SELECT \"id\" FROM \"team\" WHERE \"name\"='" + values[1] + "'");
+                    rs = st.executeQuery("SELECT \"id\" FROM \"team\" WHERE \"name\"='" + StringEscapeUtils.escapeSql(values[1]) + "'");
                     if (rs.next()) {
                         teamId = rs.getInt("id");
                     }
@@ -287,7 +286,7 @@ public class FIFAWorldCupData {
                     con = DriverManager.getConnection(url, user, password);
                     st = con.createStatement();
 
-                    rs = st.executeQuery("SELECT \"id\" FROM \"club\" WHERE \"name\"='" + values[11] + "'");
+                    rs = st.executeQuery("SELECT \"id\" FROM \"club\" WHERE \"name\"='" + StringEscapeUtils.escapeSql(values[11]) + "'");
                     if (rs.next()) {
                         clubId = rs.getInt("id");
                     }
