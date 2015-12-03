@@ -318,7 +318,7 @@ public class FIFAWorldCupData {
                     con = DriverManager.getConnection(url, user, password);
                     st = con.createStatement();
                     String stm = "INSERT INTO \"sportsman\"(\"lastname\", \"firstname\", \"birthdate\", \"captain\", \"position\", \"Anzahl Einsaetze\", \"club_id\", \"playernumber\") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-                    pst = con.prepareStatement(stm);
+                    pst = con.prepareStatement(stm, Statement.RETURN_GENERATED_KEYS);
                     String[] name = values[4].split(" ");
                     pst.setString(1, name[0]);
                     if (name.length == 2) {
