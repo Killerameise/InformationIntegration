@@ -12,7 +12,8 @@ public class Main {
     public static void main(String[] args) {
         //insertClub();
         //insertTeam();
-        insertPlayer();
+        //insertPlayer();
+
     }
 
 
