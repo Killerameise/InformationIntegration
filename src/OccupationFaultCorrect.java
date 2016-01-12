@@ -10,7 +10,7 @@ public class OccupationFaultCorrect {
     public static String user = "infointe";
     public static String password = "InfoInte1516%";
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         correct();
     }
 
@@ -33,41 +33,20 @@ public class OccupationFaultCorrect {
                 st = con.createStatement();
 
                 rs = st.executeQuery("SELECT id, occupation FROM faults " +
-                        "WHERE firstname = '"+StringEscapeUtils.escapeSql(rsPlayer.getString("firstname"))+ "' " +
-                        "AND lastname = '"+StringEscapeUtils.escapeSql(rsPlayer.getString("lastname")) + "' " +
-                        "AND birthdate = '"+StringEscapeUtils.escapeSql(rsPlayer.getString("birthdate")) + "' " +
-                        "AND \"birthCity\" = '"+StringEscapeUtils.escapeSql(rsPlayer.getString("birthCity"))+"'");
+                        "WHERE firstname = '" + StringEscapeUtils.escapeSql(rsPlayer.getString("firstname")) + "' " +
+                        "AND lastname = '" + StringEscapeUtils.escapeSql(rsPlayer.getString("lastname")) + "' " +
+                        "AND birthdate = '" + StringEscapeUtils.escapeSql(rsPlayer.getString("birthdate")) + "' " +
+                        "AND \"birthCity\" = '" + StringEscapeUtils.escapeSql(rsPlayer.getString("birthCity")) + "'");
                 int sportsman_id = -1;
-                if(rs.next()){
+                if (rs.next()) {
                     int occupation_id = -1;
                     sportsman_id = rs.getInt("id");
                     stOccupation = con.createStatement();
                     rsOccupation = stOccupation.executeQuery("SELECT id, occupation FROM occupation " +
-                            "WHERE occupation = '"+ StringEscapeUtils.escapeSql(rs.getString("occupation")) +"'");
-                    if(rsOccupation.next()){
+                            "WHERE occupation = '" + StringEscapeUtils.escapeSql(rs.getString("occupation")) + "'");
+                    if (rsOccupation.next()) {
                         occupation_id = rsOccupation.getInt("id");
-                    }else{
-                        stOccupation = con.createStatement();
-                        stOccupation.executeUpdate("INSERT INTO occupation(occupation) " +
-                                "VALUES ('" + StringEscapeUtils.escapeSql(rs.getString("occupation")) + "')",
-                                stOccupation.RETURN_GENERATED_KEYS);
-                        rsOccupation = stOccupation.getGeneratedKeys();
-                        if (rsOccupation.next()) {
-                            occupation_id = rsOccupation.getInt(1);
-                        }
-                    }
-                    stOccupation = con.createStatement();
-                    stOccupation.executeUpdate("INSERT INTO occupation_sportsman(occupation_id, sportsman_id) " +
-                                    "VALUES (" + occupation_id + ", "+ sportsman_id +")");
-                }
-                while(rs.next()) {
-                    int occupation_id = -1;
-                    stOccupation = con.createStatement();
-                    rsOccupation = stOccupation.executeQuery("SELECT * FROM occupation " +
-                            "WHERE occupation = '"+ StringEscapeUtils.escapeSql(rs.getString("occupation")) +"'");
-                    if(rsOccupation.next()){
-                        occupation_id = rsOccupation.getInt("id");
-                    }else{
+                    } else {
                         stOccupation = con.createStatement();
                         stOccupation.executeUpdate("INSERT INTO occupation(occupation) " +
                                         "VALUES ('" + StringEscapeUtils.escapeSql(rs.getString("occupation")) + "')",
@@ -79,7 +58,28 @@ public class OccupationFaultCorrect {
                     }
                     stOccupation = con.createStatement();
                     stOccupation.executeUpdate("INSERT INTO occupation_sportsman(occupation_id, sportsman_id) " +
-                            "VALUES (" + occupation_id + ", "+ sportsman_id +")");
+                            "VALUES (" + occupation_id + ", " + sportsman_id + ")");
+                }
+                while (rs.next()) {
+                    int occupation_id = -1;
+                    stOccupation = con.createStatement();
+                    rsOccupation = stOccupation.executeQuery("SELECT * FROM occupation " +
+                            "WHERE occupation = '" + StringEscapeUtils.escapeSql(rs.getString("occupation")) + "'");
+                    if (rsOccupation.next()) {
+                        occupation_id = rsOccupation.getInt("id");
+                    } else {
+                        stOccupation = con.createStatement();
+                        stOccupation.executeUpdate("INSERT INTO occupation(occupation) " +
+                                        "VALUES ('" + StringEscapeUtils.escapeSql(rs.getString("occupation")) + "')",
+                                stOccupation.RETURN_GENERATED_KEYS);
+                        rsOccupation = stOccupation.getGeneratedKeys();
+                        if (rsOccupation.next()) {
+                            occupation_id = rsOccupation.getInt(1);
+                        }
+                    }
+                    stOccupation = con.createStatement();
+                    stOccupation.executeUpdate("INSERT INTO occupation_sportsman(occupation_id, sportsman_id) " +
+                            "VALUES (" + occupation_id + ", " + sportsman_id + ")");
                     stOccupation = con.createStatement();
                     stOccupation.executeUpdate("DELETE FROM sportsman WHERE id = " + rs.getInt("id"));
                 }

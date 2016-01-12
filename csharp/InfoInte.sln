@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoInteTarget", "InfoInteT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoInteBaseball", "InfoInteBaseball\InfoInteBaseball.csproj", "{F4C76955-0FFA-423A-8A80-BA7A828ABAC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoInteSourceCleansing", "InfoInteSourceCleansing\InfoInteSourceCleansing.csproj", "{DA323F2F-4B54-4682-AC5C-C32B5E52B0A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoInteCleansing", "InfoInteCleansing\InfoInteCleansing.csproj", "{334C7B7F-7FF9-44C5-ADB7-21A64CC3578E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{F4C76955-0FFA-423A-8A80-BA7A828ABAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4C76955-0FFA-423A-8A80-BA7A828ABAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4C76955-0FFA-423A-8A80-BA7A828ABAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA323F2F-4B54-4682-AC5C-C32B5E52B0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA323F2F-4B54-4682-AC5C-C32B5E52B0A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA323F2F-4B54-4682-AC5C-C32B5E52B0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA323F2F-4B54-4682-AC5C-C32B5E52B0A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334C7B7F-7FF9-44C5-ADB7-21A64CC3578E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334C7B7F-7FF9-44C5-ADB7-21A64CC3578E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334C7B7F-7FF9-44C5-ADB7-21A64CC3578E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334C7B7F-7FF9-44C5-ADB7-21A64CC3578E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
