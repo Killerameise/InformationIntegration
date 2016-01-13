@@ -96,7 +96,7 @@ public class ChiefExecutiveDuplicateDetector {
                         System.out.println(firstNameEditDistance + ", " + lastNameEditDistance);
 
                         if (!duplicates.containsKey(sm1.getValues().get(0))) {
-                            duplicates.put(sm1.getValues().get(0), new LinkedList<>());
+                            duplicates.put(sm1.getValues().get(0), new LinkedList<String>());
                         }
                         if (!(duplicates.get(sm1.getValues().get(0)).contains(sm2.getValues().get(0)))) {
                             duplicates.get(sm1.getValues().get(0)).add(sm2.getValues().get(0));
@@ -204,7 +204,7 @@ public class ChiefExecutiveDuplicateDetector {
         mergeSort(second);
 
         // Merge the halves together, overwriting the original array
-        merge(first, second, new ArrayList<>());
+        merge(first, second, new ArrayList<Sportsman>());
         return data;
     }
 
