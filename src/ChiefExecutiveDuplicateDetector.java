@@ -11,6 +11,15 @@ public class ChiefExecutiveDuplicateDetector {
         HashMap<String, List<String>> duplicates = findDuplicates(sportsmen);
         computeTransitiveClosureDFS(duplicates);
         removeRedundantEntries(duplicates);
+        /* Merge duplicates.
+        for(String key : duplicates.keySet()){
+            int firstKey = new Integer(key);
+            for(String secondKey : duplicates.get(key)){
+                firstKey = Duplicates.eliminate(firstKey, new Integer(secondKey));
+            }
+
+        }
+        */
     }
 
     private static void removeRedundantEntries(HashMap<String, List<String>> duplicates) {
@@ -248,9 +257,9 @@ public class ChiefExecutiveDuplicateDetector {
     }
 
     private static Connection getConnectionToLocalDb() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:postgresql://localhost:5432/integratedwithdata";
-        String user = "dennis";
-        String password = "";
+        String url = "jdbc:postgresql://localhost:5432/testdb3";
+        String user = "root";
+        String password = "root";
 
         Connection connection = null;
 

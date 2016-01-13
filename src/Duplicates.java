@@ -19,7 +19,8 @@ public class Duplicates {
         eliminate(1, 2);
     }
 
-    public static void eliminate(int id1, int id2) {
+    public static int eliminate(int id1, int id2) {
+        int newPk = -1;
         Connection con = null;
         PreparedStatement stEntry1 = null;
         PreparedStatement stEntry2 = null;
@@ -36,7 +37,6 @@ public class Duplicates {
             rsEntry2 = stEntry2.executeQuery();
             if (rsEntry1.next() && rsEntry2.next()) {
                 String[] mergedEntry = compare.compareResultSets(rsEntry1, rsEntry2);
-                int newPk = -1;
                 //TODO: autogenerate the SQL with ResultSetMetaData
                 String insertSql = "INSERT INTO sportsman (firstname, lastname, birthdate, captain, position, \"Anzahl Einsaetze\", club_id, playernumber, country, games, goals, assist, hand, contract_until, market_value, belt, coach, familynamelocal, middlenamelocal, givenname, givennamelocal, favoritetechnique, gender, middlename, shortname, side, \"birthCountry\", \"birthState\", \"birthCity\", \"deathYear\", \"deathMonth\", \"deathDay\", \"deathCountry\", \"deathState\", \"deathCity\", \"nameGiven\", weight, height, bats, throws, debut, \"finalGame\", \"retroID\", \"bbrefID\", comment, startdate, enddate) " +
                         "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -90,6 +90,7 @@ public class Duplicates {
                 ex.printStackTrace();
             }
         }
+        return newPk;
     }
 
     public static void updateOccupationSportsman(int id1, int id2, int newPk, Connection con) throws SQLException {
