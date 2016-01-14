@@ -105,11 +105,12 @@ public class ChiefExecutiveDuplicateDetector {
                     int firstNameEditDistance = distance(sm1.getValues().get(1), sm2.getValues().get(1));
                     int lastNameEditDistance = distance(sm1.getValues().get(2), sm2.getValues().get(2));
                     int birthdayEditDistance = distance(sm1.getValues().get(3), sm2.getValues().get(3));
+                    double birthdayTokenSimilarity = similarity(sm1.getValues().get(3), sm2.getValues().get(3), "-");
 
-                    if (firstNameEditDistance <= 0 && lastNameEditDistance <= 0 && birthdayEditDistance <= 0 &&
-                            sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
-
-
+                    if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && birthdayEditDistance <= 2 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
+                        if (firstNameEditDistance > 0 || lastNameEditDistance > 0 || birthdayEditDistance > 0) {
+                            System.out.println("found one");
+                        }
                         if (!duplicates.containsKey(sm1.getValues().get(0))) {
                             duplicates.put(sm1.getValues().get(0), new LinkedList<String>());
                         }
@@ -205,6 +206,24 @@ public class ChiefExecutiveDuplicateDetector {
         return costs[b.length()];
     }
 
+    private static double similarity(String a, String b, String delimiter) {
+        String[] x = a.split(delimiter);
+        String[] y = b.split(delimiter);
+        List<String> xL = Arrays.asList(x);
+        List<String> yL = Arrays.asList(y);
+
+        if (xL.size() == 0 || yL.size() == 0)
+            return 0.0;
+
+        Set<String> unionXY = new HashSet<String>(xL);
+        unionXY.addAll(yL);
+
+        Set<String> intersectionXY = new HashSet<String>(xL);
+        intersectionXY.retainAll(yL);
+
+        return (double) intersectionXY.size() / (double) unionXY.size();
+    }
+
     private static ArrayList<Sportsman> mergeSort (ArrayList<Sportsman> data) {
         if (data.size() <= 1) {
             return data;
@@ -265,9 +284,9 @@ public class ChiefExecutiveDuplicateDetector {
     }
 
     private static Connection getConnectionToLocalDb() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:postgresql://localhost:5432/testdb3";
-        String user = "root";
-        String password = "root";
+        String url = "jdbc:postgresql://localhost:5432/integratedwithdata";
+        String user = "dennis";
+        String password = "1234";
 
         Connection connection = null;
 
