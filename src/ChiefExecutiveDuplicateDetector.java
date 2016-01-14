@@ -97,8 +97,10 @@ public class ChiefExecutiveDuplicateDetector {
                     //if they're possible duplicates add them to the hashmap
                     int firstNameEditDistance = distance(sm1.getValues().get(1), sm2.getValues().get(1));
                     int lastNameEditDistance = distance(sm1.getValues().get(2), sm2.getValues().get(2));
+                    int birthdayEditDistance = distance(sm1.getValues().get(3), sm2.getValues().get(3));
 
-                    if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
+                    if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && birthdayEditDistance <= 1 &&
+                            sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
 
 
                         if (!duplicates.containsKey(sm1.getValues().get(0))) {
