@@ -11,6 +11,7 @@ public class ChiefExecutiveDuplicateDetector {
         HashMap<String, List<String>> duplicates = findDuplicates(sportsmen);
         computeTransitiveClosureDFS(duplicates);
         removeRedundantEntries(duplicates);
+
         /* Merge duplicates.
         for(String key : duplicates.keySet()){
             int firstKey = new Integer(key);
@@ -150,6 +151,7 @@ public class ChiefExecutiveDuplicateDetector {
                 //Key bestimmen
                 String firstNameKey = "";
                 String lastNameKey = "";
+                String dateKey = "";
                 if (tempData.get(1).length() >= 2) {
                     firstNameKey += tempData.get(1).charAt(0);
                     firstNameKey += tempData.get(1).charAt(1);
@@ -158,9 +160,12 @@ public class ChiefExecutiveDuplicateDetector {
                     lastNameKey += tempData.get(2).charAt(0);
                     lastNameKey += tempData.get(2).charAt(1);
                 }
+                if (tempData.get(3).length() > 0) {
+                    dateKey = tempData.get(3);
+                }
 
                 Sportsman tempSportsman = new Sportsman();
-                tempSportsman.setKey((firstNameKey + lastNameKey).toLowerCase());
+                tempSportsman.setKey((firstNameKey + lastNameKey/* + dateKey*/).toLowerCase());
                 tempSportsman.setValues(tempData);
 
                 data.add(tempSportsman);
@@ -197,26 +202,27 @@ public class ChiefExecutiveDuplicateDetector {
         if (data.size() <= 1) {
             return data;
         }
-
+        
         ArrayList<Sportsman> first = new ArrayList<>(data.subList(0, data.size()/2));
         ArrayList<Sportsman> second = new ArrayList<>(data.subList(first.size(), data.size()));
 
 
         // Sort each half
-        mergeSort(first);
-        mergeSort(second);
+        first = mergeSort(first);
+        second = mergeSort(second);
 
         // Merge the halves together, overwriting the original array
-        merge(first, second, new ArrayList<Sportsman>());
+        data = merge(first, second, new ArrayList<Sportsman>());
         return data;
     }
 
-    private static void merge(ArrayList<Sportsman> first, ArrayList<Sportsman> second, ArrayList<Sportsman> result) {
+    private static ArrayList<Sportsman> merge(ArrayList<Sportsman> first, ArrayList<Sportsman> second, ArrayList<Sportsman> result) {
         // Merge both halves into the result array
         // Next element to consider in the first array
         int iFirst = 0;
         // Next element to consider in the second array
         int iSecond = 0;
+        int targetSize = first.size() + second.size();
 
         // Next open position in the result
         int j = 0;
@@ -242,18 +248,19 @@ public class ChiefExecutiveDuplicateDetector {
         }
 
         // copy what's left
-        if (j < first.size() - iFirst) {
-            result.addAll(new ArrayList<>(first.subList(iFirst, j)));
+        if (j < targetSize && iFirst < first.size()) {
+            result.addAll(new ArrayList<>(first.subList(iFirst, first.size())));
         }
-        if (j < second.size() - iSecond) {
-            result.addAll(new ArrayList<>(second.subList(iSecond, j)));
+        if (j < targetSize && iSecond < second.size()) {
+            result.addAll(new ArrayList<>(second.subList(iSecond, second.size())));
         }
+        return result;
     }
 
     private static Connection getConnectionToLocalDb() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:postgresql://localhost:5432/testdb3";
-        String user = "root";
-        String password = "root";
+        String url = "jdbc:postgresql://localhost:5432/integratedwithdata";
+        String user = "dennis";
+        String password = "1234";
 
         Connection connection = null;
 
