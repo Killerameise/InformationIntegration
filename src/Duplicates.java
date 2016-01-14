@@ -40,14 +40,15 @@ public class Duplicates {
             if (rsEntry1.next() && rsEntry2.next()) {
                 String[] mergedEntry = compare.compareResultSets(rsEntry1, rsEntry2);
                 //TODO: autogenerate the SQL with ResultSetMetaData
-                String insertSql = "INSERT INTO sportsman (firstname, lastname, birthdate, captain, position, \"Anzahl Einsaetze\", club_id, playernumber, country, games, goals, assist, hand, contract_until, market_value, belt, coach, familynamelocal, middlenamelocal, givenname, givennamelocal, favoritetechnique, gender, middlename, shortname, side, \"birthCountry\", \"birthState\", \"birthCity\", \"deathYear\", \"deathMonth\", \"deathDay\", \"deathCountry\", \"deathState\", \"deathCity\", \"nameGiven\", weight, height, bats, throws, debut, \"finalGame\", \"retroID\", \"bbrefID\", comment, startdate, enddate) " +
-                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String insertSql = "INSERT INTO sportsman (firstname, lastname, birthdate, captain, position, \"Anzahl Einsaetze\", club_id, playernumber, country, games, goals, assist, hand, contract_until, market_value, belt, coach, familynamelocal, middlenamelocal, favoritetechnique, gender, middlename, shortname, side, \"birthCountry\", \"birthState\", \"birthCity\", \"deathYear\", \"deathMonth\", \"deathDay\", \"deathCountry\", \"deathState\", \"deathCity\", \"nameGiven\", weight, height, bats, throws, debut, \"finalGame\", \"retroID\", \"bbrefID\", comment, startdate, enddate, \"year\") " +
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement insertStatement = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                 ResultSetMetaData metaData = rsEntry1.getMetaData();
-                for (int i = 1; i <= 47; i++) {
+                for (int i = 1; i <= 46; i++) {
                     if (mergedEntry[i] == null || mergedEntry[i].equals("null")) {
                         insertStatement.setNull(i, metaData.getColumnType(i + 1));
                     } else {
+                        System.out.println(metaData.getColumnTypeName(i+1));
                         if (metaData.getColumnTypeName(i + 1).equals("date")) {
                             insertStatement.setDate(i, Date.valueOf(mergedEntry[i]));
                         } else if (metaData.getColumnTypeName(i + 1).equals("int4")) {

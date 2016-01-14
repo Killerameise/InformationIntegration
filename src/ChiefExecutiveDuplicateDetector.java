@@ -12,7 +12,7 @@ public class ChiefExecutiveDuplicateDetector {
         computeTransitiveClosureDFS(duplicates);
         removeRedundantEntries(duplicates);
 
-        /* Merge duplicates.
+        // Merge duplicates.
         for(String key : duplicates.keySet()){
             int firstKey = new Integer(key);
             for(String secondKey : duplicates.get(key)){
@@ -20,7 +20,7 @@ public class ChiefExecutiveDuplicateDetector {
             }
 
         }
-        */
+
     }
 
     private static void removeRedundantEntries(HashMap<String, List<String>> duplicates) {
@@ -107,7 +107,7 @@ public class ChiefExecutiveDuplicateDetector {
                     int birthdayEditDistance = distance(sm1.getValues().get(3), sm2.getValues().get(3));
                     double birthdayTokenSimilarity = similarity(sm1.getValues().get(3), sm2.getValues().get(3), "-");
 
-                    if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && birthdayEditDistance <= 2 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
+                    if (firstNameEditDistance <= 1 && lastNameEditDistance <= 1 && birthdayTokenSimilarity <= 0.7 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
                         if (firstNameEditDistance > 0 || lastNameEditDistance > 0 || birthdayEditDistance > 0) {
                             System.out.println("found one");
                         }
@@ -284,9 +284,9 @@ public class ChiefExecutiveDuplicateDetector {
     }
 
     private static Connection getConnectionToLocalDb() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:postgresql://localhost:5432/integratedwithdata";
-        String user = "dennis";
-        String password = "1234";
+        String url = "jdbc:postgresql://sebastiankoall.de/infointe";
+        String user = "infointe";
+        String password = "InfoInte1516%";
 
         Connection connection = null;
 
