@@ -43,7 +43,6 @@ public class ChiefExecutiveDuplicateDetector {
                 keysToRemove.add(key);
             }
         }
-        System.out.println(count);
         for (String key: keysToRemove) {
             duplicates.remove(key);
         }
@@ -68,7 +67,6 @@ public class ChiefExecutiveDuplicateDetector {
         if (duplicates.containsKey(node)) {
             for (String edge : duplicates.get(node)) {
                 if (visited.containsKey(edge) && visited.get(edge) == false) {
-                    System.out.println("found " + edge);
                     if (!duplicates.get(originalNode).contains(edge)) {
                         newElements.add(edge);
                     }
@@ -101,8 +99,7 @@ public class ChiefExecutiveDuplicateDetector {
                     int lastNameEditDistance = distance(sm1.getValues().get(2), sm2.getValues().get(2));
 
                     if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
-                        System.out.println("comapring " + j + " to " + k);
-                        System.out.println(firstNameEditDistance + ", " + lastNameEditDistance);
+
 
                         if (!duplicates.containsKey(sm1.getValues().get(0))) {
                             duplicates.put(sm1.getValues().get(0), new LinkedList<String>());
@@ -136,7 +133,6 @@ public class ChiefExecutiveDuplicateDetector {
             ResultSetMetaData rmd = results.getMetaData();
             int columnCount = rmd.getColumnCount();
 
-            int rowIterator = 0;
             while(results.next()) {
 
                 ArrayList<String> tempData = new ArrayList<>();
@@ -147,9 +143,7 @@ public class ChiefExecutiveDuplicateDetector {
                     tempData.add(result);
                 }
 
-                if (rowIterator == 25259) {
-                    System.out.println("fou");
-                }
+
 
                 //Key bestimmen
                 String firstNameKey = "";
@@ -169,8 +163,6 @@ public class ChiefExecutiveDuplicateDetector {
 
                 data.add(tempSportsman);
 
-                rowIterator++;
-                System.out.println(rowIterator);
             }
 
             data = mergeSort(data);
