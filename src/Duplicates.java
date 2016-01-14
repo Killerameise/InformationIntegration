@@ -83,7 +83,7 @@ public class Duplicates {
                     updateHallOfFame(id1, id2, newPk, con);
                     updateCollegePlaying(id1, id2, newPk, con);
                     updateRanking(id1, id2, newPk, con);
-                    PreparedStatement deleteStatement = con.prepareStatement("DELETE FROM sportsman WHERE id = ? OR id = ?");
+                    PreparedStatement deleteStatement = con.prepareStatement("DELETE FROM sportsman WHERE id = ? OR id = ? CASCADE ");
                     deleteStatement.setInt(1, id1);
                     deleteStatement.setInt(2, id2);
                     deleteStatement.executeUpdate();
@@ -148,35 +148,35 @@ public class Duplicates {
     }
 
     public static void updateCollegePlaying(int id1, int id2, int newPk, Connection con) throws SQLException {
-        String sql_hall_of_fame = "SELECT sportsman_id, school_id, \"year\" FROM college_playing WHERE sportsman_id = ? or sportsman_id = ?";
-        PreparedStatement stGet_hall_of_fame = con.prepareStatement(sql_hall_of_fame);
-        stGet_hall_of_fame.setInt(1, id1);
-        stGet_hall_of_fame.setInt(2, id2);
-        ResultSet rsGet_hall_of_fame = stGet_hall_of_fame.executeQuery();
-        while (rsGet_hall_of_fame.next()) {
+        String sql_college_playing = "SELECT sportsman_id, school_id, \"year\" FROM college_playing WHERE sportsman_id = ? or sportsman_id = ?";
+        PreparedStatement stGet_college_playing = con.prepareStatement(sql_college_playing);
+        stGet_college_playing.setInt(1, id1);
+        stGet_college_playing.setInt(2, id2);
+        ResultSet rsGet_college_playing = stGet_college_playing.executeQuery();
+        while (rsGet_college_playing.next()) {
             String updateSQL = "UPDATE college_playing SET sportsman_id = ? WHERE sportsman_id = ? and \"year\" = ? and school_id = ?";
             PreparedStatement updateSt = con.prepareStatement(updateSQL);
             updateSt.setInt(1, newPk);
-            updateSt.setInt(2, rsGet_hall_of_fame.getInt("sportsman_id"));
-            updateSt.setInt(3, rsGet_hall_of_fame.getInt("year"));
-            updateSt.setString(4, rsGet_hall_of_fame.getString("school_id"));
+            updateSt.setInt(2, rsGet_college_playing.getInt("sportsman_id"));
+            updateSt.setInt(3, rsGet_college_playing.getInt("year"));
+            updateSt.setString(4, rsGet_college_playing.getString("school_id"));
             updateSt.executeUpdate();
 
         }
     }
 
     public static void updateRanking(int id1, int id2, int newPk, Connection con) throws SQLException {
-        String sql_team_sportsman = "SELECT id, count(id) as c FROM ranking WHERE sportsman_id = ? or sportsman_id = ? GROUP BY id";
-        PreparedStatement stGet_team_sportsman = con.prepareStatement(sql_team_sportsman);
-        stGet_team_sportsman.setInt(1, id1);
-        stGet_team_sportsman.setInt(2, id2);
-        ResultSet rsGet_team_sportsman = stGet_team_sportsman.executeQuery();
-        while (rsGet_team_sportsman.next()) {
-            if (rsGet_team_sportsman.getInt("c") > 1) {
+        String sql_ranking = "SELECT id, count(id) as c FROM ranking WHERE sportsman_id = ? or sportsman_id = ? GROUP BY id";
+        PreparedStatement stGet_ranking = con.prepareStatement(sql_ranking);
+        stGet_ranking.setInt(1, id1);
+        stGet_ranking.setInt(2, id2);
+        ResultSet rsGet_ranking = stGet_ranking.executeQuery();
+        while (rsGet_ranking.next()) {
+            if (rsGet_ranking.getInt("c") > 1) {
                 String deleteSql = "DELETE FROM ranking WHERE sportsman_id = ? and team_id = ?";
                 PreparedStatement deleteSt = con.prepareStatement(deleteSql);
                 deleteSt.setInt(1, id1);
-                deleteSt.setInt(2, rsGet_team_sportsman.getInt("id"));
+                deleteSt.setInt(2, rsGet_ranking.getInt("id"));
                 deleteSt.executeUpdate();
             }
         }
