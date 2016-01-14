@@ -1,3 +1,5 @@
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -59,7 +61,7 @@ public class Duplicates {
                                 insertStatement.setBoolean(i, false);
                             }
                         } else {
-                            insertStatement.setString(i, mergedEntry[i]);
+                            insertStatement.setString(i, StringEscapeUtils.escapeSql(mergedEntry[i]));
                         }
                     }
                 }
