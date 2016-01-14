@@ -47,6 +47,9 @@ public class ChiefExecutiveDuplicateDetector {
         for (String key: keysToRemove) {
             duplicates.remove(key);
         }
+        int size = 0;
+        for (String k : duplicates.keySet()) size = size + duplicates.get(k).size();
+        System.out.println("removeRedundantEntries: " + (duplicates.keySet().size() + size));
     }
 
     private static void computeTransitiveClosureDFS(HashMap<String, List<String>> duplicates) {
@@ -60,6 +63,9 @@ public class ChiefExecutiveDuplicateDetector {
             newElements = DFS(duplicates, node, node, visited, newElements);
             duplicates.get(node).addAll(newElements);
         }
+        int size = 0;
+        for (String k : duplicates.keySet()) size = size + duplicates.get(k).size();
+        System.out.println("computeTransitiveClosureDFS: " + (duplicates.keySet().size() + size));
     }
 
     private static List<String> DFS(HashMap<String, List<String>> duplicates, String node, String originalNode, HashMap<String, Boolean> visited, List<String> newElements) {
@@ -100,7 +106,7 @@ public class ChiefExecutiveDuplicateDetector {
                     int lastNameEditDistance = distance(sm1.getValues().get(2), sm2.getValues().get(2));
                     int birthdayEditDistance = distance(sm1.getValues().get(3), sm2.getValues().get(3));
 
-                    if (firstNameEditDistance <= 2 && lastNameEditDistance <= 2 && birthdayEditDistance <= 1 &&
+                    if (firstNameEditDistance <= 0 && lastNameEditDistance <= 0 && birthdayEditDistance <= 0 &&
                             sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
 
 
@@ -115,8 +121,9 @@ public class ChiefExecutiveDuplicateDetector {
                 }
             }
         }
-
-        System.out.println(duplicates.size());
+        int size = 0;
+        for (String k : duplicates.keySet()) size = size + duplicates.get(k).size();
+        System.out.println("findDuplicates: " + (duplicates.keySet().size() + size));
         return duplicates;
     }
 
@@ -128,7 +135,7 @@ public class ChiefExecutiveDuplicateDetector {
 
             Statement statement = connection.createStatement();
 
-            String sql = "SELECT * from sportsman;";
+            String sql = "SELECT * from sportsman ORDER BY firstname, lastname, birthdate;";
 
             statement.execute(sql);
             ResultSet results = statement.getResultSet();
@@ -258,9 +265,9 @@ public class ChiefExecutiveDuplicateDetector {
     }
 
     private static Connection getConnectionToLocalDb() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:postgresql://localhost:5432/integratedwithdata";
-        String user = "dennis";
-        String password = "1234";
+        String url = "jdbc:postgresql://localhost:5432/testdb3";
+        String user = "root";
+        String password = "root";
 
         Connection connection = null;
 
