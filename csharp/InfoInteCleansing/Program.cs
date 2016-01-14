@@ -11,16 +11,21 @@ namespace InfoInteCleansing
     {
         static void Main(string[] args)
         {
-            var connTarget = new NpgsqlConnection("Host=sebastiankoall.de;Username=infointe;Password=InfoInte1516%;Database=infointe");
-            connTarget.Open();
-            var connTarget2 = new InfoInteCleansingContext();
+            FixSportsman();
+
+            Console.ReadKey();
+        }
+
+        private static void FixSportsman()
+        {
+            var connTarget = new InfoInteCleansingContext();
 
             var i = 0;
             using (var conn = new InfoInteCleansingContext())
             {
-                conn.Database.SetCommandTimeout(200);
+                conn.Database.SetCommandTimeout(500);
 
-                foreach (sportsman sportsman in conn.sportsman)
+                foreach (var sportsman in conn.sportsman)
                 {
                     var entryChanged = false;
 
@@ -49,35 +54,23 @@ namespace InfoInteCleansing
                     }
 
                     ++i;
-                    //Console.WriteLine("Checked: " + i);
-
-
                     if (entryChanged)
                     {
                         Console.WriteLine("Change at: " + i + " id: " + sportsman.id);
-                        connTarget2.sportsman.Update(sportsman);
-                        /*var cmd = new NpgsqlCommand();
-                        cmd.Connection = connTarget;
-
-                        // Insert some data
-                        cmd.CommandText = "UPDATE sportsman SET firstname = '" + sportsman.firstname + "', lastname = '" + sportsman.lastname + "' WHERE id = " + sportsman.id;
-                        cmd.ExecuteNonQuery();*/
-
+                        connTarget.sportsman.Update(sportsman);
                     }
 
-                    if (i%50 == 0)
+                    if (i % 50 == 0)
                     {
-                        connTarget2.SaveChanges();
+                        connTarget.SaveChanges();
                     }
                 }
             }
 
-            connTarget.Close();
-            Console.ReadKey();
         }
 
         // Source: http://www.dotnetperls.com/uppercase-first-letter    
-        static string UppercaseWords(string value)
+        private static string UppercaseWords(string value)
         {
             var array = value.ToCharArray();
             // Handle the first letter in the string.
