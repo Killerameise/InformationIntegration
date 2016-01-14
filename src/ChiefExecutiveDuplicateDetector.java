@@ -109,7 +109,7 @@ public class ChiefExecutiveDuplicateDetector {
 
                     if (firstNameEditDistance <= 1 && lastNameEditDistance <= 1 && birthdayTokenSimilarity <= 0.7 && sm1.getKey().compareTo("") != 0 && sm2.getKey().compareTo("") != 0) {
                         if (firstNameEditDistance > 0 || lastNameEditDistance > 0 || birthdayEditDistance > 0) {
-                            System.out.println("found one");
+                            //System.out.println("found one");
                         }
                         if (!duplicates.containsKey(sm1.getValues().get(0))) {
                             duplicates.put(sm1.getValues().get(0), new LinkedList<String>());

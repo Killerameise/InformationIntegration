@@ -54,7 +54,7 @@ public class Duplicates {
                     if (mergedEntry[i] == null || mergedEntry[i].equals("null")) {
                         insertStatement.setNull(i, metaData.getColumnType(i + 1));
                     } else {
-                        System.out.println(metaData.getColumnTypeName(i+1));
+                        //System.out.println(metaData.getColumnTypeName(i+1));
                         if (metaData.getColumnTypeName(i + 1).equals("date")) {
                             insertStatement.setDate(i, Date.valueOf(mergedEntry[i]));
                         } else if (metaData.getColumnTypeName(i + 1).equals("int4")) {
@@ -83,7 +83,7 @@ public class Duplicates {
                     updateHallOfFame(id1, id2, newPk, con);
                     updateCollegePlaying(id1, id2, newPk, con);
                     updateRanking(id1, id2, newPk, con);
-                    PreparedStatement deleteStatement = con.prepareStatement("DELETE FROM sportsman WHERE id = ? OR id = ? CASCADE ");
+                    PreparedStatement deleteStatement = con.prepareStatement("DELETE FROM sportsman WHERE id = ? OR id = ?");
                     deleteStatement.setInt(1, id1);
                     deleteStatement.setInt(2, id2);
                     deleteStatement.executeUpdate();
